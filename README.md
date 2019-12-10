@@ -40,7 +40,7 @@
             maxMonths,
             selectedDate: this.state.selectedDate,
             setSelectedDate: this.state.setSelectedDate,
-            headline: "תאריך יציאה",
+            headline: "exit date",
             guideAvailable: guide1,
             guide2
           }}
