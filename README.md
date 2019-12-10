@@ -35,11 +35,16 @@
 <pre>
 < DatepickerContext.Provider
           value={{
-            monthDisplayStyle: "long",
+            // data
             blockedDats,
             maxMonths,
+
+            // using container state
             selectedDate: this.state.selectedDate,
             setSelectedDate: this.state.setSelectedDate,
+            
+            // texts and display:
+            monthDisplayStyle: "long",
             headline: "exit date",
             guideAvailable: guide1,
             guide2
