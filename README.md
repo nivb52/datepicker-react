@@ -1,6 +1,6 @@
 ## React js LIGHTWEIGHT Datepicker
 
-### Custom designed calendar component according .
+### Custom designed calendar component :
 * Pictures are at the design folder
 <div style="display: inline;">
 <img width="32%" src="./design/datepicker.png" />
