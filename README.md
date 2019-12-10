@@ -3,21 +3,23 @@
 ### Custom designed calendar component according .
 * Pictures are at the design folder
 
-<img src="./design/datepicker.png" />
+<img width="32%" src="./design/datepicker.png" />
+<img width="32%" src="./design/dropdown.png" />
+<img width="32%" src="./design/hover-selected.png" />
 
 ### LIGHTWEIGHT
 * no usage of CSS frameworks : 
 * no use of 3rd party data model
+* when clicked, the selected date printed in console as Date() object of JS.
+* The calendar allow date selection between today till maxMonths
 
 
 ### More features are:
 * Calendar easily cloned by providing another data model (by React Context)
-* Transition effects to: hovers, menu openings, etc
-* when clicked, the selected date printed in console as Date() object of JS.
+* Animation effects to: hovers and menu openings 
 * Only selectable dates can be clicked 
 * Current month passed days are not selectable
 * Fonts are included in fonts folder
-* The calendar allow date selection between today till maxMonths
 
 ### Data to supply: 
 * const blockedDats = [
