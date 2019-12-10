@@ -31,9 +31,9 @@
       ]
       </pre>
 * How much ahead you can see/book dates : <pre> maxMonths = 12 </pre>;
-* First line, and 2nd line guide for the datepicker: 
-  in english : guide1_En1  / guide1_En2
-  in other lang :guide1_LangPrefix  // there is an example for 1 more lang
+* First line, and 2nd line guide for the datepicker: </br>
+  in english : guide1_En1  / guide1_En2 </br>
+  in other lang :guide1_LangPrefix  // there is an example for 1 more lang </br>
 
 <pre>
 < DatepickerContext.Provider
