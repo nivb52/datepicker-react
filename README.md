@@ -2,10 +2,11 @@
 
 ### Custom designed calendar component according .
 * Pictures are at the design folder
-
+<div style="display: inline;">
 <img width="32%" src="./design/datepicker.png" />
-<img width="32%" src="./design/dropdown.png" />
 <img width="32%" src="./design/hover-selected.png" />
+<img width="32%" src="./design/dropdown.png" />
+</div>
 
 ### LIGHTWEIGHT
 * no usage of CSS frameworks : 
