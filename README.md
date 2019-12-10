@@ -1,21 +1,29 @@
 ## Datepicker
 
-### Create custom designed calendar component according the design in design folder.
+### Custom designed calendar component according the design in design folder.
 * The calendar should allow date selection between today till 12+ months.
-* Passed days of the current month are not selectable
+* Current month  assed days are not selectable
 * Fonts are included in fonts folder
 
+### LIGHTWEIGHT
+* no usage of CSS frameworks : 
+* no use of 3rd party data model
 
-### The main requirnments are:
-* usage of any other UI datepickers is disallowed. Everything should be custom code.
-* usage of CSS frameworks is disallowed
-* usage of date manipulation libraries is allowed
-* data model should be strictly separated from UI (use Redux, Mobx, React Context or any other state management). Calendar should be able to be easily cloned by providing another data model.
-* UI should be exactly the same as provided PNG images
-* calendar should be easalliy
-* add some transition effects to: hovers, menu openings, etc
-* when clicked, print selected date as Date() object of JS.
-* Only selectable dates can be clicked
+
+### More features are:
+* Calendar easily cloned by providing another data model (by React Context)
+* Transition effects to: hovers, menu openings, etc
+* when clicked, the selected date printed in console as Date() object of JS.
+* Only selectable dates can be clicked 
+
+### Data to supply: 
+* const blockedDats = [
+      { dd: 2, mm: 11, yy: 2019 }
+      ]
+* How much ahead you can see/book dates : maxMonths = 12;
+* First line, and 2nd line guide for the datepicker: 
+  in english : guide1_En1  / guide1_En2
+  in other lang :guide1_LangPrefix  // there is an example for 1 more lang
 
 ### Fonts
 * fonts are included in fonts folder
@@ -26,10 +34,5 @@
 
 
 ### `npm start`
-
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-
-### Final
-Upload your work to github and provide link
