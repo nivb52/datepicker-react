@@ -1,7 +1,7 @@
 ## Datepicker
 
 ### Custom designed calendar component according .
-* Pictures at the design folder
+* Pictures are at the design folder
 
 <img src="./design/datepicker.png" />
 
