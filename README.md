@@ -1,9 +1,9 @@
 ## Datepicker
 
-### Custom designed calendar component according the design in design folder.
-* The calendar should allow date selection between today till 12+ months.
-* Current month  assed days are not selectable
-* Fonts are included in fonts folder
+### Custom designed calendar component according .
+* Pictures at the design folder
+
+<img src="./desgin/datepicker.png" />
 
 ### LIGHTWEIGHT
 * no usage of CSS frameworks : 
@@ -15,6 +15,9 @@
 * Transition effects to: hovers, menu openings, etc
 * when clicked, the selected date printed in console as Date() object of JS.
 * Only selectable dates can be clicked 
+* Current month passed days are not selectable
+* Fonts are included in fonts folder
+* The calendar allow date selection between today till maxMonths
 
 ### Data to supply: 
 * const blockedDats = [
