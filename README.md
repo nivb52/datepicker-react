@@ -33,7 +33,7 @@
   in other lang :guide1_LangPrefix  // there is an example for 1 more lang
 
 <pre>
-<DatepickerContext.Provider
+< DatepickerContext.Provider
           value={{
             monthDisplayStyle: "long",
             blockedDats,
