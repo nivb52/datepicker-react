@@ -15,9 +15,18 @@ class App extends Component {
   };
 
   render() {
-    const guide1 = "תאריכי יציאה וחזרה אפשריים";
-    const guide2 = `אפשרות טיסת צ'רטר בתאריכים אלו`;
+    const Lang = navigator.language || "he-IL";
+    const guide1_En = "Departure and return dates are possible";
+    const guide2_En = "Possibility of charter flights on these dates";
+
+    const guide1_He = "תאריכי יציאה וחזרה אפשריים";
+    const guide2_He = `אפשרות טיסת צ'רטר בתאריכים אלו`;
+
+    const guide1 = Lang === "he-IL" ? guide1_He : guide1_En;
+    const guide2 = Lang === "he-IL" ? guide2_He : guide2_En;
+    //How much ahead you can see/book dates
     const maxMonths = 12;
+    
     //DEMO: BLOCK DATES AT DECEMBER AND CREATE THE WORD 'NIV'
     const blockedDats = [
       { dd: 2, mm: 11, yy: 2019 },
