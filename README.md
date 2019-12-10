@@ -24,10 +24,13 @@
 * Fonts are included in fonts folder
 
 ### Data to supply: 
-* const blockedDats = [
+* Blocked Dats 
+<pre>
+ blockedDats = [
       { dd: 2, mm: 11, yy: 2019 }
       ]
-* How much ahead you can see/book dates : maxMonths = 12;
+      </pre>
+* How much ahead you can see/book dates : <pre> maxMonths = 12 </pre>;
 * First line, and 2nd line guide for the datepicker: 
   in english : guide1_En1  / guide1_En2
   in other lang :guide1_LangPrefix  // there is an example for 1 more lang
