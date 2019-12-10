@@ -3,7 +3,7 @@
 ### Custom designed calendar component according .
 * Pictures at the design folder
 
-<img src="./desgin/datepicker.png" />
+<img src="./design/datepicker.png" />
 
 ### LIGHTWEIGHT
 * no usage of CSS frameworks : 
