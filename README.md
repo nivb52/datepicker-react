@@ -9,8 +9,9 @@
 </div>
 
 ### LIGHTWEIGHT
-* no usage of CSS frameworks : 
-* no use of 3rd party data model
+* no usage of CSS frameworks 
+* No moment.js needed
+* No use of any 3rd party data model
 * when clicked, the selected date printed in console as Date() object of JS.
 * The calendar allow date selection between today till maxMonths
 
@@ -30,6 +31,22 @@
 * First line, and 2nd line guide for the datepicker: 
   in english : guide1_En1  / guide1_En2
   in other lang :guide1_LangPrefix  // there is an example for 1 more lang
+
+<pre>
+<DatepickerContext.Provider
+          value={{
+            monthDisplayStyle: "long",
+            blockedDats,
+            maxMonths,
+            selectedDate: this.state.selectedDate,
+            setSelectedDate: this.state.setSelectedDate,
+            headline: "תאריך יציאה",
+            guideAvailable: guide1,
+            guide2
+          }}
+        >
+</pre>
+
 
 ### Fonts
 * fonts are included in fonts folder
