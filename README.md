@@ -29,7 +29,6 @@
  blockedDats = [
       { dd: 2, mm: 11, yy: 2019 },
       { dd: 11, mm: 11, yy: 2020 },
-
       ]
 </pre>
 * How much ahead you can see/book dates : <pre> maxMonths = 12 </pre>
@@ -49,7 +48,7 @@
             selectedDate: this.state.selectedDate, //value
             setSelectedDate: this.state.setSelectedDate, //onChange
             
-            // texts and display:
+            // text and display:
             monthDisplayStyle: "long",
             headline: "exit date",
             guideAvailable: guide1,
@@ -57,7 +56,6 @@
           }}
         >
 </pre>
-
 
 ### Fonts
 * fonts are included in fonts folder
