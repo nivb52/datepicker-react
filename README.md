@@ -44,9 +44,9 @@
             blockedDats,
             maxMonths,
 
-            // using container state
-            selectedDate: this.state.selectedDate,
-            setSelectedDate: this.state.setSelectedDate,
+            // using container state for : 
+            selectedDate: this.state.selectedDate, //value
+            setSelectedDate: this.state.setSelectedDate, //onChange
             
             // texts and display:
             monthDisplayStyle: "long",
