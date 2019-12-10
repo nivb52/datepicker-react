@@ -1,4 +1,4 @@
-## Datepicker
+## React js LIGHTWEIGHT Datepicker
 
 ### Custom designed calendar component according .
 * Pictures are at the design folder
