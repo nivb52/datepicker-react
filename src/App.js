@@ -30,21 +30,19 @@ class App extends Component {
     //How much ahead you can see/book dates
     const maxMonths = 12;
 
-    //DEMO: BLOCK DATES AT DECEMBER AND CREATE THE WORD 'NIV'
+    //DEMO: BLOCK DATES AT NEXT MONTH
+    const d = new Date()
+    const mm = d.getMonth() === 11 ? 0 : d.getMonth() + 1
     const blockedDats = [
-      { dd: 2, mm: 11, yy: 2019 },
-      { dd: 4, mm: 11, yy: 2019 },
-      { dd: 9, mm: 11, yy: 2019 },
-      { dd: 11, mm: 11, yy: 2019 },
-      { dd: 16, mm: 11, yy: 2019 },
-      { dd: 17, mm: 11, yy: 2019 },
-      { dd: 23, mm: 11, yy: 2019 },
-      { dd: 24, mm: 11, yy: 2019 },
-      { dd: 18, mm: 11, yy: 2019 },
-      { dd: 13, mm: 11, yy: 2019 },
-      { dd: 14, mm: 11, yy: 2019 },
-      { dd: 20, mm: 11, yy: 2019 },
-      { dd: 21, mm: 11, yy: 2019 }
+      { dd: 2, mm, yy : 2020 },
+      { dd: 4, mm, yy : 2020  },
+      { dd: 6, mm, yy : 2020  },
+      { dd: 8, mm, yy : 2020  },
+      { dd: 10, mm, yy : 2020  },
+      { dd: 22, mm, yy : 2020  },
+      { dd: 24, mm, yy : 2020  },
+      { dd: 26, mm, yy : 2020  },
+      { dd: 28, mm, yy : 2020  },
     ];
     return (
       <div className="App">
