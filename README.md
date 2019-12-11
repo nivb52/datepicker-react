@@ -62,7 +62,7 @@
 * Calendar title - Almoni 19px bold
 * Dropdown - Almoni 15px
 * Day names - Almoni 14px
-* Day numbers - Open Sans 12px
+* Day numbers - Almoni
 
 
 ### `npm start`
