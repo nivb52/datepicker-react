@@ -9,7 +9,7 @@
 </div>
 
 ### LIGHTWEIGHT
-* no usage of CSS frameworks 
+* No usage of CSS frameworks 
 * No moment.js needed
 * No use of any 3rd party data model
 * when clicked, the selected date printed in console as Date() object of JS.
