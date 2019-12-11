@@ -1,14 +1,13 @@
-## Multi Language Lightweight Datepicker for React js
+## Datepicker for React js :  LightWeight & Designed & Multi-Lang Ready
 
-### Custom designed calendar component :
-* Pictures are at the design folder
+### Designed  :
 <div style="display: inline;">
 <img width="32%" src="./design/datepicker.png" />
 <img width="32%" src="./design/hover-selected.png" />
 <img width="32%" src="./design/dropdown.png" />
 </div>
 
-### LIGHTWEIGHT
+### LIGHTWEIGHT - only 6kb !! (without fonts)
 * No usage of CSS frameworks 
 * No moment.js needed
 * No use of any 3rd party data model
@@ -17,6 +16,7 @@
 
 
 ### More features are:
+* Multi Language Ready
 * Calendar easily cloned by providing another data model (by React Context)
 * Animation effects to: hovers and menu openings 
 * Only selectable dates can be clicked 
