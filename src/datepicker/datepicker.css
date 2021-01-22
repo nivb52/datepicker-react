@@ -13,7 +13,7 @@
   position: relative;
   margin: 5px auto;
   padding: 5px 3.5%;
-  font-family: "almoni-dl";
+  font-family: 'almoni-dl';
   border: 1.3px solid rgba(158, 151, 164, 0.27);
   max-width: max-content;
   max-height: max-content;
@@ -50,7 +50,7 @@
 .datepicker-container .close:after {
   position: absolute;
   left: 15px;
-  content: " ";
+  content: ' ';
   height: 0.9rem;
   width: 1.5px;
   background-color: #333;
@@ -95,7 +95,7 @@
   height: 1px;
   display: inline-block;
   position: absolute;
-  content: " ";
+  content: ' ';
   background-color: var(--dropdown-border);
   margin-top: 1.3rem;
 }
@@ -140,7 +140,7 @@
 /*================*/
 /* SELECT MONTHS - ARROWS AND SCROLL */
 /*================*/
-@import "./arrows-and-scroll.css";
+@import './arrows-and-scroll.css';
 .datepicker-container .arrows {
   display: inline-block;
   width: 100%;
@@ -159,18 +159,6 @@
   position: relative;
 }
 
-.datepicker-container i.arrow.left:hover,
-.datepicker-container i.arrow.right:hover {
-  transition: transform 0.5s cubic-bezier(0.25, 1.7, 0.35, 1.5);
-}
-.datepicker-container i.arrow.left:hover {
-  border: 1px solid rgb(var(--prime-color), 0.5);
-  transform: translate3d(25%, 5px, 0);
-}
-.datepicker-container i.arrow.right:hover {
-  border: 1px solid rgb(var(--prime-color), 0.5);
-  transform: translate3d(-25%, 5px, 0) rotate(-270deg);
-}
 .datepicker-container i.arrow.left::after,
 .datepicker-container i.arrow.right::after {
   height: 35px;
@@ -178,14 +166,13 @@
   margin-top: -35px;
   border: 1px solid var(--dropdown-border);
   position: absolute;
-  content: " ";
+  content: ' ';
   cursor: pointer;
   overflow: hidden;
 }
 .datepicker-container i.arrow.left:hover::after,
 .datepicker-container i.arrow.right:hover::after {
-  border-left: 1px solid rgb(var(--prime-color));
-  border-bottom: 1px solid rgb(var(--prime-color));
+  border: 1px solid rgba(var(--prime-color), 0.5);
 }
 .datepicker-container i.arrow.left::after {
   transform: translate(18px, 18px) rotate(45deg);
@@ -284,7 +271,7 @@
 .date-picker i.guide-circle {
   height: calc(var(--font-size) / 3 * 2);
   width: calc(var(--font-size) / 3 * 2);
-  content: " ";
+  content: ' ';
   border-radius: 10px;
   margin-top: 0.125rem;
 }
