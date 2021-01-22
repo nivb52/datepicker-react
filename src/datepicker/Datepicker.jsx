@@ -1,5 +1,7 @@
-import React, { Component } from "react";
-import DatepickerContext from "./datepickerContext";
+import React, { useEffect, useState, useContext } from 'react';
+import DatepickerContext from './datepickerContext';
+
+import Config from './Config';
 
 import {
   CALENDAR_WEEK_DAYS,
@@ -11,250 +13,243 @@ import {
   getTodayDate,
   getYearAfterDiff,
   getMonthAfterDiff,
-  isLastMonth
-} from "./helpers/calendar";
+  calcIsLastMonth,
+} from './helpers/calendar';
 
-import "./datepicker.css";
+import './datepicker.css';
 
-class Datepicker extends Component {
-  state = {
-    monthDates: getMonthDates(),
-    emptyDates: getEmptyDates(),
-    month: THIS_MONTH,
-    year: THIS_YEAR,
-    dropdownIsShow: false,
-    dropdownTitle: "",
-    monthsForDropdown: [],
-    displayMonths: []
-  };
+function Datepicker() {
+  const date_picker_context = useContext(DatepickerContext);
 
-  componentDidMount() {
-    const valueOfMonths = [];
-    const displayMonths = [];
-    const { maxMonths } = this.context;
+  const [monthDates, setMonthDates] = useState(getMonthDates());
+  const [emptyDates, setEmptyDates] = useState(getEmptyDates());
+  const [currentMonth, setCurrentMonth] = useState(THIS_MONTH);
+  const [currentYear, setCurrentYear] = useState(THIS_YEAR);
+  const [dropdownIsShow, setDropdownIsShow] = useState(false);
+  const [dropdownTitle, setDropdownTitle] = useState('');
+
+  const [displayMonths, setDisplayMonths] = useState([]);
+  const [monthsForDropdown, setMonthsForDropdown] = useState(
+    getMonthsObj(date_picker_context.maxMonths)
+  );
+
+  useEffect(() => {
+    const { monthDisplayStyle } = date_picker_context;
+    const value_of_months = [];
+    const aggregate_display_months = [];
     // GET DATES OBJ TO DISPLAY AT DROPDOWN AS MONTH AND YEAR
-    const monthsForDropdown = getMonthsObj(maxMonths);
-    const { monthDisplayStyle } = this.context;
-    Object.entries(monthsForDropdown).map(month => {
-      let m = month[1].toLocaleString("default", {
-        month: monthDisplayStyle || "long"
-      });
-      m += " " + month[1].getFullYear();
-      valueOfMonths.push([month[1].getFullYear(), month[1].getMonth()]);
-      return displayMonths.push(m);
-    });
 
-    this.setState({ monthsForDropdown, displayMonths });
-    if (this.state.dropdownTitle || !monthsForDropdown[0]) return;
+    Object.entries(monthsForDropdown).map((month_dropdown) => {
+      let month_for_disply = month_dropdown[1].toLocaleString('default', {
+        month: monthDisplayStyle || 'long',
+      });
+      month_for_disply += ' ' + month_dropdown[1].getFullYear();
+      value_of_months.push([
+        month_dropdown[1].getFullYear(),
+        month_dropdown[1].getMonth(),
+      ]);
+      aggregate_display_months.push(month_for_disply);
+    });
+    setDisplayMonths(aggregate_display_months);
+
+    if (dropdownTitle || !monthsForDropdown[0]) return;
     // DEFAULT HEADLINE / TITLE :
-    const dropdownTitle =
-      monthsForDropdown[0].toLocaleString("default", { month: "long" }) +
-      " " +
-      monthsForDropdown[0].getFullYear();
-    this.setState({ dropdownTitle });
-  }
+    setDropdownTitle(
+      monthsForDropdown[0].toLocaleString('default', { month: 'long' }) +
+        ' ' +
+        monthsForDropdown[0].getFullYear()
+    );
+  }, []);
 
   // GENERAL DROPDOWN
-  openDropdown = () => {
-    this.setState({
-      dropdownIsShow: !this.state.dropdownIsShow
-    });
+  const openDropdown = () => {
+    setDropdownIsShow(!dropdownIsShow);
   };
 
-  isFirstMonth = () => {
-    let { month, year } = this.state;
-    return month === THIS_MONTH && year === THIS_YEAR;
+  const closeDropdown = () => {
+    dropdownIsShow && setDropdownIsShow(false);
   };
 
-  isLastMonth = () => {
-    const { month, year } = this.state;
-    const { maxMonths } = this.context;
-    return isLastMonth(month, year, maxMonths);
-    // return month === THIS_MONTH && year !== THIS_YEAR;
+  const isFirstMonth = () => {
+    return currentMonth === THIS_MONTH && currentYear === THIS_YEAR;
   };
 
-  isBlockedDay = i => {
-    const { blockedDats } = this.context;
+  const isLastMonth = () => {
+    const { maxMonths } = date_picker_context;
+    return calcIsLastMonth(currentMonth, currentYear, maxMonths);
+    // return currentMonth === THIS_MONTH && currentYear !== THIS_YEAR;
+  };
+
+  const isBlockedDay = (i) => {
+    const { blockedDats } = date_picker_context;
     i++; // location 0 is really 1st of the month
     return (
       (blockedDats &&
         blockedDats.find(
-          item =>
-            item.dd === i &&
-            item.mm === this.state.month &&
-            item.yy === this.state.year
+          (item) =>
+            item.dd === i && item.mm === currentMonth && item.yy === currentYear
         )) ||
-      (THIS_YEAR === this.state.year &&
-        THIS_MONTH === this.state.month &&
+      (THIS_YEAR === currentYear &&
+        THIS_MONTH === currentMonth &&
         i < getTodayDate())
     );
   };
 
-  handlePickDate = i => {
-    if (this.isBlockedDay(i)) return;
+  const handlePickDate = (i) => {
+    if (isBlockedDay(i)) return;
     i++;
-    let { month, year } = this.state;
-    let t = new Date(year, month, i);
-    let selectedDate = [year, month, i];
+    let t = new Date(currentYear, currentMonth, i);
+    let selectedDate = [currentYear, currentMonth, i];
     // CHECK IF NEED TO CLEAR IT (DOUBLE CLICK ON THE SAME DATE)
     selectedDate =
-      this.context.selectedDate[0] === selectedDate[0] &&
-      this.context.selectedDate[1] === selectedDate[1] &&
-      this.context.selectedDate[2] === selectedDate[2]
+      date_picker_context.selectedDate[0] === selectedDate[0] &&
+      date_picker_context.selectedDate[1] === selectedDate[1] &&
+      date_picker_context.selectedDate[2] === selectedDate[2]
         ? []
         : selectedDate;
-    this.context.setSelectedDate(selectedDate)
+    date_picker_context.setSelectedDate(selectedDate);
     // RETURN IF WE CLEARED THE DATE :
     if (!selectedDate[0]) return;
     console.log(t); // DISPLAY DATE OBJECT AS REQUESTED
   };
 
   // DROPDOWN
-  handlePickMonth = value => {
-    const [year, month, dropdownTitle] = value;
+  const handlePickMonth = (value) => {
+    const [year, month, dropdown_title] = value;
     // CREATE THE DATES :
-    const monthDates = getMonthDates(+month, +year);
-    const emptyDates = getEmptyDates(+month, +year);
-    this.setState({
-      monthDates,
-      emptyDates,
-      month: +month,
-      year: +year,
-      dropdownTitle
-    });
+    setMonthDates(getMonthDates(+month, +year));
+    setEmptyDates(getEmptyDates(+month, +year));
+    // monthDates,
+    // emptyDates,
+    setCurrentMonth(+month);
+    setCurrentYear(+year);
+    setDropdownTitle(dropdown_title);
+    // });
   };
 
   //ARROWS
-  handleMonthArrow = diff => {
-    let { month, year } = this.state;
-
+  const handleMonthArrow = (diff) => {
     // CHEACK IF LAST MONTH OR MORE THAN 12 MONTHS FROM NOW
-    if (diff < 0 && this.isFirstMonth()) return;
-    if (diff > 0 && this.isLastMonth()) return;
+    if (diff < 0 && isFirstMonth()) return;
+    if (diff > 0 && isLastMonth()) return;
 
     // CALC AND CHANGE MONTH AND YEAR
-    year = getYearAfterDiff(year, month, diff);
-    month = getMonthAfterDiff(month, diff);
+    let year = getYearAfterDiff(currentYear, currentMonth, diff);
+    let month = getMonthAfterDiff(currentMonth, diff);
 
     //GET THE DATA IN ORDER TO USE: (fn) handlePickMonth
     let m = new Date(year, month, 1);
-    let dropdownTitle = m.toLocaleString("default", { month: "long" });
-    dropdownTitle += " " + m.getFullYear();
-    const value = [year, month, dropdownTitle];
-    this.handlePickMonth(value);
+    let dropdown_title = m.toLocaleString('default', { month: 'long' });
+    dropdown_title += ' ' + m.getFullYear();
+    const value = [year, month, dropdown_title];
+    handlePickMonth(value);
   };
 
-  render() {
-    //titles
-    const headline = this.context.headline || "תאריך יציאה";
-    const { guideAvailable, guide2 } = this.context;
-    //state
-    const {
-      dropdownIsShow,
-      monthsForDropdown,
-      displayMonths,
-    } = this.state;
+  //titles
+  const {
+    guideAvailable,
+    guide2,
+    headline = Config.default_headline,
+  } = date_picker_context;
+  //state
 
+  return (
+    <DatepickerContext.Consumer>
+      {({ selectedDate }) => (
+        <div
+          className="datepicker-container"
+          onClick={() => closeDropdown()}
+          style={{ direction: 'rtl' }}>
+          <div className="close"></div>
+          <span className="datepicker-headline">{headline}</span>
 
-    return (
-      <DatepickerContext.Consumer>
-         {({ selectedDate }) => (
-      <div className="datepicker-container" style={{ direction: "rtl" }}>
-        <div className="close"></div>
-        <span className="datepicker-headline">{headline}</span>
+          <div className="months-container" onClick={() => openDropdown()}>
+            <div className="months-dropdown">
+              <span>
+                <i
+                  className={
+                    'dorpdown-arrow ' + (dropdownIsShow ? 'up' : 'down')
+                  }></i>
+                {dropdownTitle}
+              </span>
 
-        <div className="months-container">
-          <div className="months-dropdown" onClick={() => this.openDropdown()}>
-            <span>
-              <i
-                className={"dorpdown-arrow " + (dropdownIsShow ? "up" : "down")}
-              ></i>
-              {this.state.dropdownTitle}
-            </span>
-
-            <ul
-              className={"months-select " + (dropdownIsShow ? "show" : "hide")}
-            >
-              {displayMonths.map((m, i) => (
-                <li
-                  className="month"
-                  key={i}
-                  onClick={() =>
-                    this.handlePickMonth([
-                      monthsForDropdown[i].getFullYear(),
-                      monthsForDropdown[i].getMonth(),
-                      m
-                    ])
-                  }
-                >
-                  {m}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="arrows">
-          <i
-            className={
-              "arrow right " + (this.isFirstMonth() ? " disabeld" : "")
-            }
-            onClick={() => this.handleMonthArrow(-1)}
-          ></i>
-
-          <i
-            className={"arrow left " + (this.isLastMonth() ? " disabeld" : "")}
-            onClick={() => this.handleMonthArrow(1)}
-          ></i>
-        </div>
-
-        <div className="calendar">
-          <div className="dates">
-            {CALENDAR_WEEK_DAYS.map(dayName => (
-              <div className="day" key={dayName}>
-                {dayName}
-              </div>
-            ))}
-
-            {this.state.emptyDates.map((d, i) => (
-              <div className="date-number empty" key={i}></div>
-            ))}
-
-            {this.state.monthDates.map((day, i) => (
-              <div
+              <ul
                 className={
-                  this.isBlockedDay(i)
-                    ? "date-number unavailable"
-                    : selectedDate &&
-                      this.state.year === selectedDate[0] &&
-                      this.state.month === selectedDate[1] &&
-                      day === selectedDate[2]
-                    ? "date-number  available selected"
-                    : "date-number available"
-                }
-                key={i}
-                onClick={() => this.handlePickDate(i)}
-              >
-                {day}
-              </div>
-            ))}
+                  'months-select ' + (dropdownIsShow ? 'show' : 'hide')
+                }>
+                {displayMonths.map((month, i) => (
+                  <li
+                    className="month"
+                    key={i}
+                    onClick={() =>
+                      handlePickMonth([
+                        monthsForDropdown[i].getFullYear(),
+                        monthsForDropdown[i].getMonth(),
+                        month,
+                      ])
+                    }>
+                    {month}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+          <div className="arrows">
+            <i
+              className={'arrow right ' + (isFirstMonth() ? ' disabeld' : '')}
+              onClick={() => handleMonthArrow(-1)}></i>
 
-        <div className="date-picker guide-container">
-          <div className="guide">
-            <i className="date-number available"></i>
-            <span> {guideAvailable}</span>
+            <i
+              className={'arrow left ' + (isLastMonth() ? ' disabeld' : '')}
+              onClick={() => handleMonthArrow(1)}></i>
           </div>
-          <div className="guide">
-            <i className="guide-circle charter"></i>
-            <span>{guide2}</span>
+
+          <div className="calendar">
+            <div className="dates">
+              {CALENDAR_WEEK_DAYS.map((dayName) => (
+                <div className="day" key={dayName}>
+                  {dayName}
+                </div>
+              ))}
+
+              {emptyDates.map((d, i) => (
+                <div className="date-number empty" key={i}></div>
+              ))}
+
+              {monthDates.map((day, i) => (
+                <div
+                  className={
+                    isBlockedDay(i)
+                      ? 'date-number unavailable'
+                      : selectedDate &&
+                        currentYear === selectedDate[0] &&
+                        currentMonth === selectedDate[1] &&
+                        day === selectedDate[2]
+                      ? 'date-number  available selected'
+                      : 'date-number available'
+                  }
+                  key={i}
+                  onClick={() => handlePickDate(i)}>
+                  {day}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="date-picker guide-container">
+            <div className="guide">
+              <i className="date-number available"></i>
+              <span> {guideAvailable}</span>
+            </div>
+            <div className="guide">
+              <i className="guide-circle charter"></i>
+              <span>{guide2}</span>
+            </div>
           </div>
         </div>
-      </div>)}
-      </DatepickerContext.Consumer>
-    );
-    
-  }
+      )}
+    </DatepickerContext.Consumer>
+  );
 }
 
 Datepicker.contextType = DatepickerContext;
