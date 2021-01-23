@@ -36,21 +36,20 @@ function Datepicker() {
   useEffect(() => {
     const { monthDisplayStyle } = date_picker_context;
     const value_of_months = [];
-    const aggregate_display_months = [];
     // GET DATES OBJ TO DISPLAY AT DROPDOWN AS MONTH AND YEAR
-
-    Object.entries(monthsForDropdown).map((month_dropdown) => {
-      let month_for_disply = month_dropdown[1].toLocaleString('default', {
-        month: monthDisplayStyle || 'long',
-      });
-      month_for_disply += ' ' + month_dropdown[1].getFullYear();
-      value_of_months.push([
-        month_dropdown[1].getFullYear(),
-        month_dropdown[1].getMonth(),
-      ]);
-      aggregate_display_months.push(month_for_disply);
-    });
-    setDisplayMonths(aggregate_display_months);
+    setDisplayMonths(
+      Object.entries(monthsForDropdown).map((month_dropdown) => {
+        let month_for_display = month_dropdown[1].toLocaleString('default', {
+          month: monthDisplayStyle || 'long',
+        });
+        month_for_display += ' ' + month_dropdown[1].getFullYear();
+        value_of_months.push([
+          month_dropdown[1].getFullYear(),
+          month_dropdown[1].getMonth(),
+        ]);
+        return month_for_display;
+      })
+    );
 
     if (dropdownTitle || !monthsForDropdown[0]) return;
     // DEFAULT HEADLINE / TITLE :
@@ -107,10 +106,12 @@ function Datepicker() {
       date_picker_context.selectedDate[2] === selectedDate[2]
         ? []
         : selectedDate;
+
     date_picker_context.setSelectedDate(selectedDate);
     // RETURN IF WE CLEARED THE DATE :
     if (!selectedDate[0]) return;
-    console.log(t); // DISPLAY DATE OBJECT AS REQUESTED
+
+    console.log(t); // DISPLAY DATE OBJECT
   };
 
   // DROPDOWN
