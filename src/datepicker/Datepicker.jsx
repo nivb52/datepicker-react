@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
-import DatepickerContext from './datepickerContext';
+import React, { useEffect, useState } from 'react';
 
 import Config from './Config';
 
@@ -18,9 +17,19 @@ import {
 
 import './datepicker.css';
 
-function Datepicker() {
-  const date_picker_context = useContext(DatepickerContext);
-
+function Datepicker({
+  data: {
+    monthDisplayStyle,
+    maxMonths,
+    blockedDats,
+    selectedDate,
+    setSelectedDate,
+    //titles
+    guideAvailable,
+    guide2,
+    headline = Config.default_headline,
+  },
+}) {
   const [monthDates, setMonthDates] = useState(getMonthDates());
   const [emptyDates, setEmptyDates] = useState(getEmptyDates());
   const [currentMonth, setCurrentMonth] = useState(THIS_MONTH);
@@ -29,18 +38,16 @@ function Datepicker() {
   const [dropdownTitle, setDropdownTitle] = useState('');
 
   const [displayMonths, setDisplayMonths] = useState([]);
-  const [monthsForDropdown, setMonthsForDropdown] = useState(
-    getMonthsObj(date_picker_context.maxMonths)
-  );
+  const monthsForDropdown = getMonthsObj(maxMonths);
+  const MONTH_DEFAULT_STYLE = 'long';
 
   useEffect(() => {
-    const { monthDisplayStyle } = date_picker_context;
     const value_of_months = [];
     // GET DATES OBJ TO DISPLAY AT DROPDOWN AS MONTH AND YEAR
     setDisplayMonths(
       Object.entries(monthsForDropdown).map((month_dropdown) => {
         let month_for_display = month_dropdown[1].toLocaleString('default', {
-          month: monthDisplayStyle || 'long',
+          month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
         });
         month_for_display += ' ' + month_dropdown[1].getFullYear();
         value_of_months.push([
@@ -52,9 +59,12 @@ function Datepicker() {
     );
 
     if (dropdownTitle || !monthsForDropdown[0]) return;
+
     // DEFAULT HEADLINE / TITLE :
     setDropdownTitle(
-      monthsForDropdown[0].toLocaleString('default', { month: 'long' }) +
+      monthsForDropdown[0].toLocaleString('default', {
+        month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
+      }) +
         ' ' +
         monthsForDropdown[0].getFullYear()
     );
@@ -74,13 +84,11 @@ function Datepicker() {
   };
 
   const isLastMonth = () => {
-    const { maxMonths } = date_picker_context;
     return calcIsLastMonth(currentMonth, currentYear, maxMonths);
     // return currentMonth === THIS_MONTH && currentYear !== THIS_YEAR;
   };
 
   const isBlockedDay = (i) => {
-    const { blockedDats } = date_picker_context;
     i++; // location 0 is really 1st of the month
     return (
       (blockedDats &&
@@ -98,20 +106,20 @@ function Datepicker() {
     if (isBlockedDay(i)) return;
     i++;
     let t = new Date(currentYear, currentMonth, i);
-    let selectedDate = [currentYear, currentMonth, i];
+    let current_selected_date = [currentYear, currentMonth, i];
     // CHECK IF NEED TO CLEAR IT (DOUBLE CLICK ON THE SAME DATE)
-    selectedDate =
-      date_picker_context.selectedDate[0] === selectedDate[0] &&
-      date_picker_context.selectedDate[1] === selectedDate[1] &&
-      date_picker_context.selectedDate[2] === selectedDate[2]
+    current_selected_date =
+      selectedDate[0] === current_selected_date[0] &&
+      selectedDate[1] === current_selected_date[1] &&
+      selectedDate[2] === current_selected_date[2]
         ? []
-        : selectedDate;
+        : current_selected_date;
 
-    date_picker_context.setSelectedDate(selectedDate);
+    setSelectedDate(current_selected_date);
     // RETURN IF WE CLEARED THE DATE :
-    if (!selectedDate[0]) return;
+    if (!current_selected_date[0]) return;
 
-    console.log(t); // DISPLAY DATE OBJECT
+    return t; // return DATE OBJECT
   };
 
   // DROPDOWN
@@ -140,19 +148,13 @@ function Datepicker() {
 
     //GET THE DATA IN ORDER TO USE: (fn) handlePickMonth
     let m = new Date(year, month, 1);
-    let dropdown_title = m.toLocaleString('default', { month: 'long' });
+    let dropdown_title = m.toLocaleString('default', {
+      month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
+    });
     dropdown_title += ' ' + m.getFullYear();
     const value = [year, month, dropdown_title];
     handlePickMonth(value);
   };
-
-  const {
-    selectedDate,
-    //titles
-    guideAvailable,
-    guide2,
-    headline = Config.default_headline,
-  } = date_picker_context;
 
   return (
     <div

@@ -15,12 +15,14 @@ import {
 
 function App() {
   const [selectedDate, setSelectedDate] = useState([]);
+
   const Lang = navigator.language || 'he-IL';
   const guide1 = Lang === 'he-IL' ? guide1_He : guide1_En;
   const guide2 = Lang === 'he-IL' ? guide2_He : guide2_En;
   const headline = Lang === 'he-IL' ? headline_He : headline_En;
 
   const maxMonths = 12; // @description: How much ahead you can see/book dates
+  console.log(selectedDate);
 
   return (
     <div className="App">
@@ -36,7 +38,18 @@ function App() {
           guide2,
         }}>
         <div>
-          <Datepicker />
+          <Datepicker
+            data={{
+              selectedDate,
+              setSelectedDate,
+              monthDisplayStyle: 'long',
+              blockedDats,
+              maxMonths,
+              headline,
+              guideAvailable: guide1,
+              guide2,
+            }}
+          />
         </div>
       </DatepickerContext.Provider>
     </div>
