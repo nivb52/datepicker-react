@@ -19,7 +19,7 @@ import './datepicker.css';
 
 function Datepicker({
   data: {
-    monthDisplayStyle,
+    monthDisplayStyle = Config.default_month_style,
     maxMonths,
     blockedDats,
     selectedDate,
@@ -39,15 +39,14 @@ function Datepicker({
 
   const [displayMonths, setDisplayMonths] = useState([]);
   const monthsForDropdown = getMonthsObj(maxMonths);
-  const MONTH_DEFAULT_STYLE = 'long';
 
   useEffect(() => {
     const value_of_months = [];
-    // GET DATES OBJ TO DISPLAY AT DROPDOWN AS MONTH AND YEAR
+    // @Description: GET DATES OBJ TO DISPLAY AT DROPDOWN AS MONTH AND YEAR
     setDisplayMonths(
       Object.entries(monthsForDropdown).map((month_dropdown) => {
         let month_for_display = month_dropdown[1].toLocaleString('default', {
-          month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
+          month: monthDisplayStyle,
         });
         month_for_display += ' ' + month_dropdown[1].getFullYear();
         value_of_months.push([
@@ -63,7 +62,7 @@ function Datepicker({
     // DEFAULT HEADLINE / TITLE :
     setDropdownTitle(
       monthsForDropdown[0].toLocaleString('default', {
-        month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
+        month: monthDisplayStyle,
       }) +
         ' ' +
         monthsForDropdown[0].getFullYear()
@@ -85,11 +84,10 @@ function Datepicker({
 
   const isLastMonth = () => {
     return calcIsLastMonth(currentMonth, currentYear, maxMonths);
-    // return currentMonth === THIS_MONTH && currentYear !== THIS_YEAR;
   };
 
   const isBlockedDay = (i) => {
-    i++; // location 0 is really 1st of the month
+    i++; // @note: 0 is 1st of the month
     return (
       (blockedDats &&
         blockedDats.find(
@@ -102,12 +100,15 @@ function Datepicker({
     );
   };
 
+  /** @RETURNS {[YEAR,MONTH,DATE] | [] }
+     @Description: [] IF WE CLEARED THE DATE,  DATE AS ARRAY [YEAR,MONTH,DATE] 
+  */
   const handlePickDate = (i) => {
     if (isBlockedDay(i)) return;
     i++;
     let t = new Date(currentYear, currentMonth, i);
     let current_selected_date = [currentYear, currentMonth, i];
-    // CHECK IF NEED TO CLEAR IT (DOUBLE CLICK ON THE SAME DATE)
+    // @Description: CHECK IF NEED TO CLEAR IT (DOUBLE CLICK ON THE SAME DATE)
     current_selected_date =
       selectedDate[0] === current_selected_date[0] &&
       selectedDate[1] === current_selected_date[1] &&
@@ -116,10 +117,6 @@ function Datepicker({
         : current_selected_date;
 
     setSelectedDate(current_selected_date);
-    // RETURN IF WE CLEARED THE DATE :
-    if (!current_selected_date[0]) return;
-
-    return t; // return DATE OBJECT
   };
 
   // DROPDOWN
@@ -128,8 +125,6 @@ function Datepicker({
     // CREATE THE DATES :
     setMonthDates(getMonthDates(+month, +year));
     setEmptyDates(getEmptyDates(+month, +year));
-    // monthDates,
-    // emptyDates,
     setCurrentMonth(+month);
     setCurrentYear(+year);
     setDropdownTitle(dropdown_title);
@@ -149,7 +144,7 @@ function Datepicker({
     //GET THE DATA IN ORDER TO USE: (fn) handlePickMonth
     let m = new Date(year, month, 1);
     let dropdown_title = m.toLocaleString('default', {
-      month: monthDisplayStyle || MONTH_DEFAULT_STYLE,
+      month: monthDisplayStyle,
     });
     dropdown_title += ' ' + m.getFullYear();
     const value = [year, month, dropdown_title];
