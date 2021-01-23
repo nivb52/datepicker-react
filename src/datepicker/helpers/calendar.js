@@ -41,8 +41,7 @@ export const getMonthsObj = (
   return months;
 };
 
-export const CALENDAR_MONTHS = (monthsToInit, month, year) =>
-  getMonthsObj(monthsToInit, month, year);
+// export const CALENDAR_MONTHS = getMonthsObj();
 
 // init => Number days in a month for a given year from 28 - 31
 const _calcMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
