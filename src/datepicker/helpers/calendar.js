@@ -14,7 +14,6 @@ export const THIS_MONTH = +new Date().getMonth();
 // init => First day of the month : from 1 - 7
 export const getMonthFirstDay = (month = THIS_MONTH, year = THIS_YEAR) => {
   let t = new Date(year, month, 1);
-  console.log('month first day', 1 + t.getDay());
   return 1 + t.getDay();
 };
 
