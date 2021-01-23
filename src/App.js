@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import Datepicker from './datepicker/Datepicker';
@@ -14,8 +14,7 @@ import {
 } from './date_picker_demo';
 
 function App() {
-  const [selectedDate, setSelectedDateState] = useState([]);
-  const setSelectedDate = useCallback(setSelectedDateState);
+  const [selectedDate, setSelectedDate] = useState([]);
   const Lang = navigator.language || 'he-IL';
   const guide1 = Lang === 'he-IL' ? guide1_He : guide1_En;
   const guide2 = Lang === 'he-IL' ? guide2_He : guide2_En;

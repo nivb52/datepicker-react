@@ -153,7 +153,6 @@ function Datepicker() {
     guide2,
     headline = Config.default_headline,
   } = date_picker_context;
-  //state
 
   return (
     <div
