@@ -146,8 +146,9 @@ function Datepicker() {
     handlePickMonth(value);
   };
 
-  //titles
   const {
+    selectedDate,
+    //titles
     guideAvailable,
     guide2,
     headline = Config.default_headline,
@@ -155,103 +156,98 @@ function Datepicker() {
   //state
 
   return (
-    <DatepickerContext.Consumer>
-      {({ selectedDate }) => (
-        <div
-          className="datepicker-container"
-          onClick={() => closeDropdown()}
-          style={{ direction: 'rtl' }}>
-          <div className="close"></div>
-          <span className="datepicker-headline">{headline}</span>
+    <>
+      <div
+        className="datepicker-container"
+        onClick={() => closeDropdown()}
+        style={{ direction: 'rtl' }}>
+        <div className="close"></div>
+        <span className="datepicker-headline">{headline}</span>
 
-          <div className="months-container" onClick={() => openDropdown()}>
-            <div className="months-dropdown">
-              <span>
-                <i
-                  className={
-                    'dorpdown-arrow ' + (dropdownIsShow ? 'up' : 'down')
-                  }></i>
-                {dropdownTitle}
-              </span>
-
-              <ul
+        <div className="months-container" onClick={() => openDropdown()}>
+          <div className="months-dropdown">
+            <span>
+              <i
                 className={
-                  'months-select ' + (dropdownIsShow ? 'show' : 'hide')
-                }>
-                {displayMonths.map((month, i) => (
-                  <li
-                    className="month"
-                    key={i}
-                    onClick={() =>
-                      handlePickMonth([
-                        monthsForDropdown[i].getFullYear(),
-                        monthsForDropdown[i].getMonth(),
-                        month,
-                      ])
-                    }>
-                    {month}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="arrows">
-            <i
-              className={'arrow right ' + (isFirstMonth() ? ' disabeld' : '')}
-              onClick={() => handleMonthArrow(-1)}></i>
+                  'dorpdown-arrow ' + (dropdownIsShow ? 'up' : 'down')
+                }></i>
+              {dropdownTitle}
+            </span>
 
-            <i
-              className={'arrow left ' + (isLastMonth() ? ' disabeld' : '')}
-              onClick={() => handleMonthArrow(1)}></i>
-          </div>
-
-          <div className="calendar">
-            <div className="dates">
-              {CALENDAR_WEEK_DAYS.map((dayName) => (
-                <div className="day" key={dayName}>
-                  {dayName}
-                </div>
-              ))}
-
-              {emptyDates.map((d, i) => (
-                <div className="date-number empty" key={i}></div>
-              ))}
-
-              {monthDates.map((day, i) => (
-                <div
-                  className={
-                    isBlockedDay(i)
-                      ? 'date-number unavailable'
-                      : selectedDate &&
-                        currentYear === selectedDate[0] &&
-                        currentMonth === selectedDate[1] &&
-                        day === selectedDate[2]
-                      ? 'date-number  available selected'
-                      : 'date-number available'
-                  }
+            <ul
+              className={'months-select ' + (dropdownIsShow ? 'show' : 'hide')}>
+              {displayMonths.map((month, i) => (
+                <li
+                  className="month"
                   key={i}
-                  onClick={() => handlePickDate(i)}>
-                  {day}
-                </div>
+                  onClick={() =>
+                    handlePickMonth([
+                      monthsForDropdown[i].getFullYear(),
+                      monthsForDropdown[i].getMonth(),
+                      month,
+                    ])
+                  }>
+                  {month}
+                </li>
               ))}
-            </div>
-          </div>
-
-          <div className="date-picker guide-container">
-            <div className="guide">
-              <i className="date-number available"></i>
-              <span> {guideAvailable}</span>
-            </div>
-            <div className="guide">
-              <i className="guide-circle charter"></i>
-              <span>{guide2}</span>
-            </div>
+            </ul>
           </div>
         </div>
-      )}
-    </DatepickerContext.Consumer>
+        <div className="arrows">
+          <i
+            className={'arrow right ' + (isFirstMonth() ? ' disabeld' : '')}
+            onClick={() => handleMonthArrow(-1)}></i>
+
+          <i
+            className={'arrow left ' + (isLastMonth() ? ' disabeld' : '')}
+            onClick={() => handleMonthArrow(1)}></i>
+        </div>
+
+        <div className="calendar">
+          <div className="dates">
+            {CALENDAR_WEEK_DAYS.map((dayName) => (
+              <div className="day" key={dayName}>
+                {dayName}
+              </div>
+            ))}
+
+            {emptyDates.map((d, i) => (
+              <div className="date-number empty" key={i}></div>
+            ))}
+
+            {monthDates.map((day, i) => (
+              <div
+                className={
+                  isBlockedDay(i)
+                    ? 'date-number unavailable'
+                    : selectedDate &&
+                      currentYear === selectedDate[0] &&
+                      currentMonth === selectedDate[1] &&
+                      day === selectedDate[2]
+                    ? 'date-number  available selected'
+                    : 'date-number available'
+                }
+                key={i}
+                onClick={() => handlePickDate(i)}>
+                {day}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="date-picker guide-container">
+          <div className="guide">
+            <i className="date-number available"></i>
+            <span> {guideAvailable}</span>
+          </div>
+          <div className="guide">
+            <i className="guide-circle charter"></i>
+            <span>{guide2}</span>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
-Datepicker.contextType = DatepickerContext;
 export default Datepicker;

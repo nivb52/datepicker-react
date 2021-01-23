@@ -36,7 +36,9 @@ function App() {
           guideAvailable: guide1,
           guide2,
         }}>
-        <Datepicker />
+        <div>
+          <Datepicker />
+        </div>
       </DatepickerContext.Provider>
     </div>
   );
