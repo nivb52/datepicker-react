@@ -14,7 +14,8 @@ export const THIS_MONTH = +new Date().getMonth();
 // init => First day of the month : from 1 - 7
 export const getMonthFirstDay = (month = THIS_MONTH, year = THIS_YEAR) => {
   let t = new Date(year, month, 1);
-  return +t.getDay();
+  console.log('month first day', 1 + t.getDay());
+  return 1 + t.getDay();
 };
 
 // init => Today
@@ -41,7 +42,8 @@ export const getMonthsObj = (
   return months;
 };
 
-export const CALENDAR_MONTHS = getMonthsObj();
+export const CALENDAR_MONTHS = (monthsToInit, month, year) =>
+  getMonthsObj(monthsToInit, month, year);
 
 // init => Number days in a month for a given year from 28 - 31
 const _calcMonthDays = (month = THIS_MONTH, year = THIS_YEAR) => {
