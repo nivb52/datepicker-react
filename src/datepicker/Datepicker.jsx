@@ -106,7 +106,6 @@ function Datepicker({
   const handlePickDate = (i) => {
     if (isBlockedDay(i)) return;
     i++;
-    let t = new Date(currentYear, currentMonth, i);
     let current_selected_date = [currentYear, currentMonth, i];
     // @Description: CHECK IF NEED TO CLEAR IT (DOUBLE CLICK ON THE SAME DATE)
     current_selected_date =
@@ -117,6 +116,7 @@ function Datepicker({
         : current_selected_date;
 
     setSelectedDate(current_selected_date);
+    // setSelectedDate(new Date(currentYear, currentMonth, i));
   };
 
   // DROPDOWN
